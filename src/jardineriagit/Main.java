@@ -1,5 +1,6 @@
 package jardineriagit;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -557,36 +558,42 @@ public class Main extends javax.swing.JFrame {
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
 
-        try{
-            ps = conexion.con.prepareStatement("INSERT into cliente (nombre_cliente, nombre_contacto, apellido_contacto, telefono, "
-                + "fax, linea_direccion1, linea_direccion2, ciudad, region, pais, codigo_postal, limite_credito) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+        if(!nombres.getText().equals("") || !telefono.getText().equals("") || !fax.getText().equals("") || !direccion1.getText().equals("") || !ciudad.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "LLene los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            jLabel2.setBackground(Color.RED);
+            nombres.setBackground(Color.RED);
+        }else{
+            try{
+                ps = conexion.con.prepareStatement("INSERT into cliente (nombre_cliente, nombre_contacto, apellido_contacto, telefono, "
+                    + "fax, linea_direccion1, linea_direccion2, ciudad, region, pais, codigo_postal, limite_credito) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            //ps.setInt(1, Integer.parseInt(id.getText()));
-            ps.setString(1, nombres.getText());
-            ps.setString(2, nombreContacto.getText());
-            ps.setString(3, apellidoContacto.getText());
-            ps.setString(4, telefono.getText());
-            ps.setString(5, fax.getText());
-            ps.setString(6, direccion1.getText());
-            ps.setString(7, direccion2.getText());
-            ps.setString(8, ciudad.getText());
-            ps.setString(9, region.getText());
-            ps.setString(10, pais.getText());
-            ps.setString(11, postal.getText());
-            ps.setInt(12, Integer.parseInt(credito.getText()));
+                //ps.setInt(1, Integer.parseInt(id.getText()));
+                ps.setString(1, nombres.getText());
+                ps.setString(2, nombreContacto.getText());
+                ps.setString(3, apellidoContacto.getText());
+                ps.setString(4, telefono.getText());
+                ps.setString(5, fax.getText());
+                ps.setString(6, direccion1.getText());
+                ps.setString(7, direccion2.getText());
+                ps.setString(8, ciudad.getText());
+                ps.setString(9, region.getText());
+                ps.setString(10, pais.getText());
+                ps.setString(11, postal.getText());
+                ps.setInt(12, Integer.parseInt(credito.getText()));
 
-            int verifica = ps.executeUpdate();
-            if(verifica > 0){
-                JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
-                limpiarCampos();
-                limpiarTabla();
-                cargarDatos();
-            }else{
-                JOptionPane.showMessageDialog(this, "Cliente no registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                int verifica = ps.executeUpdate();
+                if(verifica > 0){
+                    JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
+                    limpiarCampos();
+                    limpiarTabla();
+                    cargarDatos();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Cliente no registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                //con.close();
+            }catch(Exception e){
+                System.out.println(e);
             }
-            //con.close();
-        }catch(Exception e){
-            System.out.println(e);
         }
     }//GEN-LAST:event_agregarActionPerformed
 
