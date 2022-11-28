@@ -14,7 +14,7 @@ public class Main extends javax.swing.JFrame {
     Connection con;
     DefaultTableModel model;
     PreparedStatement ps;
-    ResultSet rs;
+    ResultSet rs;  
 
     public Main() {
         initComponents();
@@ -38,9 +38,41 @@ public class Main extends javax.swing.JFrame {
                         paneBD.setVisible(false);
                         break;
                 }
-            }
-
+            }   
         });
+        /*comboId.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    con = conexion.getConection();
+                    ps = con.prepareStatement("SELECT * FROM cliente WHERE codigo_cliente = ?");
+
+                    ps.setString(1, comboId.getSelectedItem().toString());
+                    rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        id.setText(rs.getString("codigo_cliente"));
+                        nombres.setText(rs.getString("nombre_cliente"));
+                        nombreContacto.setText(rs.getString("nombre_contacto"));
+                        apellidoContacto.setText(rs.getString("apellido_contacto"));
+                        telefono.setText(rs.getString("telefono"));
+                        fax.setText(rs.getString("fax"));
+                        direccion1.setText(rs.getString("linea_direccion1"));
+                        direccion2.setText(rs.getString("linea_direccion2"));
+                        ciudad.setText(rs.getString("ciudad"));
+                        region.setText(rs.getString("region"));
+                        pais.setText(rs.getString("pais"));
+                        postal.setText(rs.getString("codigo_postal"));
+                        credito.setText(String.valueOf(rs.getInt("limite_credito")));
+                        lblEmpleado.setText(rs.getString("codigo_empleado_rep_ventas"));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cliente no existe", "Verifique ID", JOptionPane.ERROR_MESSAGE);
+                    }
+                    //con.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });*/
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +89,6 @@ public class Main extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         credito = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        comboId = new javax.swing.JComboBox<>();
         apellidoContacto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         nombreContacto = new javax.swing.JTextField();
@@ -85,6 +116,7 @@ public class Main extends javax.swing.JFrame {
         buscar = new javax.swing.JButton();
         actualizar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         comboTablas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,25 +164,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel12.setText("Credito:");
 
-        comboId.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboIdItemStateChanged(evt);
-            }
-        });
-        comboId.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                comboIdMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                comboIdMouseEntered(evt);
-            }
-        });
-        comboId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboIdActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Contacto:");
 
         nombreContacto.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +193,9 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setText("Teléfono:");
 
         jLabel4.setText("Dirección 1:");
+
+        id.setEditable(false);
+        id.setEnabled(false);
 
         nombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,48 +234,44 @@ public class Main extends javax.swing.JFrame {
             .addGroup(paneDatosLayout.createSequentialGroup()
                 .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneDatosLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(206, 206, 206))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneDatosLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
                             .addGroup(paneDatosLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel11)))
-                        .addGap(18, 18, 18)
-                        .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(7, 7, 7)
-                        .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(region, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(postal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(paneDatosLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(paneDatosLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel11)))
+                                .addGap(18, 18, 18)
+                                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(7, 7, 7)
+                                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(region, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(postal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2)
                             .addGroup(paneDatosLayout.createSequentialGroup()
-                                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(paneDatosLayout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneDatosLayout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(16, 16, 16)))
+                                .addComponent(jLabel5)
+                                .addGap(16, 16, 16)
                                 .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(paneDatosLayout.createSequentialGroup()
-                                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(paneDatosLayout.createSequentialGroup()
-                                        .addComponent(nombreContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                        .addComponent(nombreContacto)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(apellidoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(nombres))))))
-                .addGap(32, 32, 32)
+                                    .addComponent(nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(39, 39, 39)))
                 .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paneDatosLayout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -284,22 +296,23 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(fax))
-                            .addGroup(paneDatosLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneDatosLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblEmpleado)))))
-                .addGap(23, 23, 23))
+                                .addComponent(lblEmpleado)
+                                .addGap(8, 8, 8))))))
         );
         paneDatosLayout.setVerticalGroup(
             paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneDatosLayout.createSequentialGroup()
-                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEmpleado)
-                    .addComponent(jLabel14))
+                .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEmpleado)
+                        .addComponent(jLabel14)))
                 .addGap(18, 18, 18)
                 .addGroup(paneDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paneDatosLayout.createSequentialGroup()
@@ -360,9 +373,14 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre y Apellido", "Nombre Contacto", "Apellido Contacto", "Teléfono", "Fax", "Dirección 1", "Dirección 2", "Ciudad", "Región", "País", "C. Postal", "Empleado", "Crédito"
+                "Id", "Nombre y Apellido", "Nombre Contacto", "Apellido Contacto", "Teléfono", "Fax", "Dirección 1", "Dirección 2", "Ciudad", "Región", "País", "C. Postal", "Empleado", "Crédito"
             }
         ));
+        tableBD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableBDMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableBD);
 
         javax.swing.GroupLayout paneBDLayout = new javax.swing.GroupLayout(paneBD);
@@ -412,30 +430,40 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiar.setText("Limpiar Campos");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout paneOperarLayout = new javax.swing.GroupLayout(paneOperar);
         paneOperar.setLayout(paneOperarLayout);
         paneOperarLayout.setHorizontalGroup(
             paneOperarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneOperarLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(20, 20, 20)
                 .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(actualizar)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(18, 18, 18)
+                .addComponent(btnLimpiar)
+                .addGap(22, 22, 22))
         );
         paneOperarLayout.setVerticalGroup(
             paneOperarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneOperarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paneOperarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(eliminar)
-                    .addComponent(buscar)
+                .addGroup(paneOperarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(actualizar)
-                    .addComponent(agregar))
+                    .addComponent(agregar)
+                    .addComponent(buscar)
+                    .addComponent(eliminar)
+                    .addComponent(btnLimpiar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -450,20 +478,19 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(paneDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addComponent(paneOperar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(paneBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(lblTittle)
                         .addGap(18, 18, 18)
-                        .addComponent(comboTablas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(comboTablas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(paneOperar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(paneDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -504,22 +531,6 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_creditoActionPerformed
 
-    private void comboIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboIdItemStateChanged
-
-    }//GEN-LAST:event_comboIdItemStateChanged
-
-    private void comboIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboIdMouseClicked
-
-    }//GEN-LAST:event_comboIdMouseClicked
-
-    private void comboIdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboIdMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboIdMouseEntered
-
-    private void comboIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIdActionPerformed
-
-    }//GEN-LAST:event_comboIdActionPerformed
-
     private void nombreContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreContactoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreContactoActionPerformed
@@ -547,31 +558,33 @@ public class Main extends javax.swing.JFrame {
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
 
         try{
-            ps = conexion.con.prepareStatement("INSERT into cliente (codigo_cliente, nombre_cliente, apellido_contacto, nombre_contacto, telefono, "
-                + "fax, linea_direccion1, linea_direccion2, ciudad, region, pais, codigo_postal, limite_credito) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = conexion.con.prepareStatement("INSERT into cliente (nombre_cliente, nombre_contacto, apellido_contacto, telefono, "
+                + "fax, linea_direccion1, linea_direccion2, ciudad, region, pais, codigo_postal, limite_credito) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            ps.setInt(1, Integer.parseInt(id.getText()));
-            ps.setString(2, nombres.getText());
+            //ps.setInt(1, Integer.parseInt(id.getText()));
+            ps.setString(1, nombres.getText());
+            ps.setString(2, nombreContacto.getText());
             ps.setString(3, apellidoContacto.getText());
-            ps.setString(4, nombreContacto.getText());
-            ps.setString(5, telefono.getText());
-            ps.setString(6, fax.getText());
-            ps.setString(7, direccion1.getText());
-            ps.setString(8, direccion2.getText());
-            ps.setString(9, ciudad.getText());
-            ps.setString(10, region.getText());
-            ps.setString(11, pais.getText());
-            ps.setString(12, postal.getText());
-            ps.setInt(13, Integer.parseInt(credito.getText()));
+            ps.setString(4, telefono.getText());
+            ps.setString(5, fax.getText());
+            ps.setString(6, direccion1.getText());
+            ps.setString(7, direccion2.getText());
+            ps.setString(8, ciudad.getText());
+            ps.setString(9, region.getText());
+            ps.setString(10, pais.getText());
+            ps.setString(11, postal.getText());
+            ps.setInt(12, Integer.parseInt(credito.getText()));
 
             int verifica = ps.executeUpdate();
             if(verifica > 0){
                 JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
                 limpiarCampos();
+                limpiarTabla();
+                cargarDatos();
             }else{
                 JOptionPane.showMessageDialog(this, "Cliente no registrado", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            con.close();
+            //con.close();
         }catch(Exception e){
             System.out.println(e);
         }
@@ -588,13 +601,23 @@ public class Main extends javax.swing.JFrame {
             rs = ps.executeQuery();
             if(rs.next()){
                 nombres.setText(rs.getString("nombre_cliente"));
-                telefono.setText(rs.getString("apellido_contacto"));
-                direccion1.setText(rs.getString("telefono"));
+                nombreContacto.setText(rs.getString("nombre_contacto"));
+                apellidoContacto.setText(rs.getString("apellido_contacto"));
+                telefono.setText(rs.getString("telefono"));
+                fax.setText(rs.getString("fax"));
+                direccion1.setText(rs.getString("linea_direccion1"));
+                direccion2.setText(rs.getString("linea_direccion2"));
+                ciudad.setText(rs.getString("ciudad"));
+                region.setText(rs.getString("region"));
+                pais.setText(rs.getString("pais"));
+                postal.setText(rs.getString("codigo_postal"));
+                credito.setText(rs.getString("limite_credito"));
+                lblEmpleado.setText(rs.getString("codigo_empleado_rep_ventas"));
             }else{
                 JOptionPane.showMessageDialog(this, "Cliente no existe", "Verifique ID", JOptionPane.ERROR_MESSAGE);
             }
 
-            con.close();
+            //con.close();
         }catch(Exception e){
             System.out.println(e);
         }
@@ -604,21 +627,35 @@ public class Main extends javax.swing.JFrame {
 
         try{
             con = conexion.getConection();
-            ps = con.prepareStatement("UPDATE personas SET nombre=?, telefono=?, direccion=? WHERE id=?");
+            ps = con.prepareStatement("UPDATE cliente SET nombre_cliente=?, nombre_contacto=?, apellido_contacto=?, "
+                    + "telefono=?, fax=?, linea_direccion1=?, linea_direccion2=?, ciudad=?, region=?, pais=?, "
+                    + "codigo_postal=?, limite_credito=? WHERE codigo_cliente=?");
 
             ps.setString(1, nombres.getText());
-            ps.setString(2, telefono.getText());
-            ps.setString(3, direccion1.getText());
-            ps.setString(4, id.getText());
+            ps.setString(2, nombreContacto.getText());
+            ps.setString(3, apellidoContacto.getText());
+            ps.setString(4, telefono.getText());
+            ps.setString(5, fax.getText());
+            ps.setString(6, direccion1.getText());
+            ps.setString(7, direccion2.getText());
+            ps.setString(8, ciudad.getText());
+            ps.setString(9, region.getText());
+            ps.setString(10, pais.getText());
+            ps.setString(11, postal.getText());
+            ps.setInt(12, Integer.parseInt(credito.getText()));
+            
+            ps.setString(13, id.getText());
 
             int verifica = ps.executeUpdate();
             if(verifica > 0){
                 JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente");
                 limpiarCampos();
+                limpiarTabla();
+                cargarDatos();
             }else{
                 JOptionPane.showMessageDialog(this, "Cliente no actualizado", "Verifique ID", JOptionPane.ERROR_MESSAGE);
             }
-            con.close();
+            //con.close();
         }catch(Exception e){
             System.out.println(e);
         }
@@ -626,53 +663,101 @@ public class Main extends javax.swing.JFrame {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
 
-        try{
-            con = conexion.getConection();
-            ps = con.prepareStatement("DELETE from cliente WHERE codigo_cliente = ?");
+        int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar a "+nombres.getText()+"?", "Confimación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(resp == 0){
+            try{
+                con = conexion.getConection();
+                ps = con.prepareStatement("DELETE from cliente WHERE codigo_cliente = ?");
 
-            ps.setString(1, id.getText());
+                ps.setString(1, id.getText());
 
-            int verifica = ps.executeUpdate();
-            if(verifica > 0){
-                JOptionPane.showMessageDialog(this, "Cliente borrado exitosamente");
-                limpiarCampos();
-            }else{
-                JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Verifique ID", JOptionPane.ERROR_MESSAGE);
+                int verifica = ps.executeUpdate();
+                if(verifica > 0){
+                    JOptionPane.showMessageDialog(this, "Cliente borrado exitosamente");
+                    limpiarCampos();
+                    limpiarTabla();
+                    cargarDatos();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Verifique ID", JOptionPane.ERROR_MESSAGE);
+                }
+                //con.close();
+            }catch(Exception e){
+                System.out.println(e);
             }
-            con.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
+        }        
     }//GEN-LAST:event_eliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void tableBDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBDMouseClicked
+        int fila = tableBD.getSelectedRow();
+        String idd, nombreCli, nombreCon, apellidoCon, tel, faxx, dir1, dir2, ciudadd, regionn, paiss, postall, empleado, creditoo;
+        if(fila == -1){
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }else{
+            idd = (String) tableBD.getValueAt(fila, 0);
+            nombreCli = (String) tableBD.getValueAt(fila, 1);
+            nombreCon = (String) tableBD.getValueAt(fila, 2);
+            apellidoCon = (String) tableBD.getValueAt(fila, 3);
+            tel = (String) tableBD.getValueAt(fila, 4);
+            faxx = (String) tableBD.getValueAt(fila, 5);
+            dir1 = (String) tableBD.getValueAt(fila, 6);
+            dir2 = (String) tableBD.getValueAt(fila, 7);           
+            ciudadd = (String) tableBD.getValueAt(fila, 8);
+            regionn = (String) (String) tableBD.getValueAt(fila, 9);
+            paiss = (String) tableBD.getValueAt(fila, 10);
+            postall = (String) tableBD.getValueAt(fila, 11);
+            empleado = (String) tableBD.getValueAt(fila, 12);
+            creditoo = (String) tableBD.getValueAt(fila, 13).toString();
+            
+            id.setText(idd);
+            nombres.setText(nombreCli);
+            nombreContacto.setText(nombreCon);
+            apellidoContacto.setText(apellidoCon);
+            telefono.setText(tel);
+            fax.setText(faxx);
+            direccion1.setText(dir1);
+            direccion2.setText(dir2);
+            ciudad.setText(ciudadd);
+            region.setText(regionn);
+            pais.setText(paiss);
+            postal.setText(postall);
+            credito.setText(creditoo);
+            lblEmpleado.setText(empleado);
+        }
+    }//GEN-LAST:event_tableBDMouseClicked
 
     private void cargarDatos() {
         try{
             con = conexion.getConection();
             ps = con.prepareStatement("SELECT * FROM cliente");                       
             rs = ps.executeQuery();
-            Object[] cliente = new Object[13];
+            Object[] cliente = new Object[14];
             model = (DefaultTableModel) tableBD.getModel();
             
             while(rs.next()){
-                comboId.addItem(rs.getString("codigo_cliente"));
-                cliente[0] = rs.getString("nombre_cliente");
-                cliente[1] = rs.getString("nombre_contacto");
-                cliente[2] = rs.getString("apellido_contacto");
-                cliente[3] = rs.getString("telefono");
-                cliente[4] = rs.getString("fax");
-                cliente[5] = rs.getString("linea_direccion1");
-                cliente[6] = rs.getString("linea_direccion2");
-                cliente[7] = rs.getString("ciudad");
-                cliente[8] = rs.getString("region");
-                cliente[9] = rs.getString("pais");
-                cliente[10] = rs.getString("codigo_postal");
-                cliente[11] = rs.getString("codigo_empleado_rep_ventas");
-                cliente[12] = rs.getString("limite_credito");
+                cliente[0] = rs.getString("codigo_cliente");
+                cliente[1] = rs.getString("nombre_cliente");
+                cliente[2] = rs.getString("nombre_contacto");
+                cliente[3] = rs.getString("apellido_contacto");
+                cliente[4] = rs.getString("telefono");
+                cliente[5] = rs.getString("fax");
+                cliente[6] = rs.getString("linea_direccion1");
+                cliente[7] = rs.getString("linea_direccion2");
+                cliente[8] = rs.getString("ciudad");
+                cliente[9] = rs.getString("region");
+                cliente[10] = rs.getString("pais");
+                cliente[11] = rs.getString("codigo_postal");
+                cliente[12] = rs.getString("codigo_empleado_rep_ventas");
+                cliente[13] = rs.getInt("limite_credito");
                 
                 model.addRow(cliente);
             }            
             tableBD.setModel(model);            
-            con.close();            
+            //con.close();            
         }catch(Exception e){
             System.out.println(e);
         }
@@ -693,7 +778,14 @@ public class Main extends javax.swing.JFrame {
         postal.setText("");
         credito.setText("");
         lblEmpleado.setText("0");
-        comboId.setSelectedIndex(0);
+        //comboId.setSelectedIndex(0);
+    }
+    
+    public void limpiarTabla(){
+        for (int i = 0; i < tableBD.getRowCount(); i++) {
+            model.removeRow(i);
+            i = i-1;
+        }
     }
     
     public static void main(String args[]) {
@@ -708,9 +800,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton actualizar;
     private javax.swing.JButton agregar;
     private javax.swing.JTextField apellidoContacto;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton buscar;
     private javax.swing.JTextField ciudad;
-    private javax.swing.JComboBox<String> comboId;
     private javax.swing.JComboBox<String> comboTablas;
     private javax.swing.JTextField credito;
     private javax.swing.JTextField direccion1;
