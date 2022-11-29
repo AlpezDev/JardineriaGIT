@@ -27,8 +27,8 @@ public class FrameOficinas extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         cargarDatos();                                    //Se cargan los elementos de la tabla
-        ajustarAnchoColumna(tableBDPago);                     //Se llama al metodo que ajusta las columnas        
-        tableBDPago.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//Se desactiva el Auto Resize de la tabla
+        ajustarAnchoColumna(tableBDoficina);                     //Se llama al metodo que ajusta las columnas        
+        tableBDoficina.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//Se desactiva el Auto Resize de la tabla
         comboTablas.setSelectedIndex(2);
         comboTablas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,7 @@ public class FrameOficinas extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         paneBD = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableBDPago = new javax.swing.JTable();
+        tableBDoficina = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -320,7 +320,7 @@ public class FrameOficinas extends javax.swing.JFrame {
 
         jScrollPane1.setWheelScrollingEnabled(false);
 
-        tableBDPago.setModel(new javax.swing.table.DefaultTableModel(
+        tableBDoficina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -328,12 +328,12 @@ public class FrameOficinas extends javax.swing.JFrame {
                 "Código", "Ciudad", "País", "Región", "Postal", "Teléfono", "Dirección 1", "Dirección 2"
             }
         ));
-        tableBDPago.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableBDoficina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableBDPagoMouseClicked(evt);
+                tableBDoficinaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableBDPago);
+        jScrollPane1.setViewportView(tableBDoficina);
 
         javax.swing.GroupLayout paneBDLayout = new javax.swing.GroupLayout(paneBD);
         paneBD.setLayout(paneBDLayout);
@@ -568,32 +568,32 @@ public class FrameOficinas extends javax.swing.JFrame {
         limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void tableBDPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBDPagoMouseClicked
-        int fila = tableBDPago.getSelectedRow();
-        String idd, nombreCli, nombreCon, apellidoCon, tel, postt, tell, dir1, dir2;
+    private void tableBDoficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBDoficinaMouseClicked
+        int fila = tableBDoficina.getSelectedRow();
+        System.out.println(fila);
+        String idd, nombreCli, nombreCon, apellidoCon, tel, postt, tell, dir1;
         if(fila == -1){
             JOptionPane.showMessageDialog(this, "Seleccione una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }else{
-            idd = (String) tableBDPago.getValueAt(fila, 0);
-            nombreCli = (String) tableBDPago.getValueAt(fila, 1);
-            nombreCon = (String) tableBDPago.getValueAt(fila, 2);
-            apellidoCon = (String) tableBDPago.getValueAt(fila, 3);
-            tel = (String) tableBDPago.getValueAt(fila, 4); 
-            postt = (String) tableBDPago.getValueAt(fila, 5);
-            tell = (String) tableBDPago.getValueAt(fila, 6);
-            dir1 = (String) tableBDPago.getValueAt(fila, 7);
-            dir2 = (String) tableBDPago.getValueAt(fila, 8);            
+            idd = (String) tableBDoficina.getValueAt(fila, 0);
+            nombreCli = (String) tableBDoficina.getValueAt(fila, 1);
+            nombreCon = (String) tableBDoficina.getValueAt(fila, 2);
+            apellidoCon = (String) tableBDoficina.getValueAt(fila, 3);
+            tel = (String) tableBDoficina.getValueAt(fila, 4); 
+            postt = (String) tableBDoficina.getValueAt(fila, 5);
+            tell = (String) tableBDoficina.getValueAt(fila, 6);
+            dir1 = (String) tableBDoficina.getValueAt(fila, 7);
 
             idPago.setText(idd);
-            ciudad.setText("sdgdsgdsgdsg");
-            pais.setText(apellidoCon);
-            region.setText(tel);
-            postal.setText(postt);  
-            telefono.setText(tell);
-            direccion1.setText(dir1);
-            direccion2.setText(dir2);            
+            ciudad.setText(nombreCli);
+            pais.setText(nombreCon);
+            region.setText(apellidoCon);
+            postal.setText(tel);  
+            telefono.setText(postt);
+            direccion1.setText(tell);
+            direccion2.setText(dir1);            
         }
-    }//GEN-LAST:event_tableBDPagoMouseClicked
+    }//GEN-LAST:event_tableBDoficinaMouseClicked
 
     private void direccion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccion2ActionPerformed
         // TODO add your handling code here:
@@ -629,7 +629,7 @@ public class FrameOficinas extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM oficina");                       
             rs = ps.executeQuery();
             Object[] cliente = new Object[8];
-            model = (DefaultTableModel) tableBDPago.getModel();
+            model = (DefaultTableModel) tableBDoficina.getModel();
             
             while(rs.next()){
                 cliente[0] = rs.getString("codigo_oficina");
@@ -643,7 +643,7 @@ public class FrameOficinas extends javax.swing.JFrame {
                 
                 model.addRow(cliente);
             }            
-            tableBDPago.setModel(model);            
+            tableBDoficina.setModel(model);            
             //con.close();            
         }catch(Exception e){
             System.out.println(e);
@@ -662,7 +662,7 @@ public class FrameOficinas extends javax.swing.JFrame {
     }
     
     public void limpiarTabla(){
-        for (int i = 0; i < tableBDPago.getRowCount(); i++) {
+        for (int i = 0; i < tableBDoficina.getRowCount(); i++) {
             model.removeRow(i);
             i = i-1;
         }
@@ -758,7 +758,7 @@ public class FrameOficinas extends javax.swing.JFrame {
     private javax.swing.JPanel panePago;
     private javax.swing.JTextField postal;
     private javax.swing.JTextField region;
-    private javax.swing.JTable tableBDPago;
+    private javax.swing.JTable tableBDoficina;
     private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }
